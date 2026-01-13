@@ -23,7 +23,7 @@ export const loginWithGithub = createAsyncThunk(
       const response = await authService.login(code);
       authService.saveTokens(response.access_token, response.refresh_token);
       return response.user;
-    } catch (error) {
+    } catch {
       return rejectWithValue('Login failed');
     }
   }
@@ -35,7 +35,7 @@ export const fetchCurrentUser = createAsyncThunk(
     try {
       const user = await authService.getCurrentUser();
       return user;
-    } catch (error) {
+    } catch {
       return rejectWithValue('Failed to fetch user');
     }
   }
