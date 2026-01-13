@@ -1,4 +1,6 @@
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://api.agent-marketplace.com';
+// Use empty string for same-origin API calls (K3s ingress routes /api to backend)
+// Only use fallback if VITE_API_URL is undefined (not just empty)
+export const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'https://api.agent-marketplace.com';
 
 export const CATEGORIES = [
   { slug: 'pm', name: 'Project Management', icon: '📋' },
