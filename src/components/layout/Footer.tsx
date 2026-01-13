@@ -44,8 +44,10 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <a
-                  href="/docs"
+                  href="http://localhost:8000/docs"
                   className="hover:text-white transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   API Docs
                 </a>
@@ -90,7 +92,7 @@ export function Footer() {
 
         <div className="mt-12 pt-8 border-t border-neutral-800 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm">
-            &copy; {new Date().getFullYear()} Agent Marketplace. All rights reserved.
+            &copy; {new Date().getFullYear()} Kevin McAllorum. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm">
             <a href="/privacy" className="hover:text-white transition-colors">

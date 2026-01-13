@@ -4,11 +4,9 @@ kind: Kustomization
 namespace: agent-marketplace
 
 resources:
-  - namespace.yaml
-  - configmap.yaml
-  - secrets.yaml
+  # namespace already exists from API deployment
+  # - namespace.yaml
   - web-deployment.yaml
-  - database.yaml
   - ingress.yaml
 
 commonLabels:

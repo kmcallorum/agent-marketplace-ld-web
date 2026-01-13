@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/name: agent-marketplace-web
     app.kubernetes.io/component: frontend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: agent-marketplace-web
@@ -25,15 +25,12 @@ spec:
     spec:
       containers:
         - name: web
-          image: agent-marketplace-web:latest
-          imagePullPolicy: IfNotPresent
+          image: kmcallo/agent-marketplace-web:latest
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 80
               protocol: TCP
-          envFrom:
-            - configMapRef:
-                name: agent-marketplace-config
           # Reduced resources for K3s/edge environments
           resources:
             requests:
