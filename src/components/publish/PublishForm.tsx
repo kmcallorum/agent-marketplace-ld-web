@@ -2,11 +2,11 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input, Textarea, Select } from '@/components/common';
 import { FileUploader } from './FileUploader';
-import { agentCreateSchema, AgentCreateInput } from '@/utils/validation';
+import { agentPublishSchema, AgentPublishInput } from '@/utils/validation';
 import { CATEGORIES } from '@/utils/constants';
 
 interface PublishFormProps {
-  onSubmit: (data: AgentCreateInput & { codeFile: File }) => void;
+  onSubmit: (data: AgentPublishInput) => void;
   isLoading?: boolean;
 }
 
@@ -17,8 +17,8 @@ export function PublishForm({ onSubmit, isLoading }: PublishFormProps) {
     setValue,
     watch,
     formState: { errors },
-  } = useForm<AgentCreateInput & { codeFile: File }>({
-    resolver: zodResolver(agentCreateSchema),
+  } = useForm<AgentPublishInput>({
+    resolver: zodResolver(agentPublishSchema),
     defaultValues: {
       version: '1.0.0',
     },

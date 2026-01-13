@@ -7,6 +7,10 @@ export const agentCreateSchema = z.object({
   version: z.string().regex(/^\d+\.\d+\.\d+$/, 'Version must be in format X.Y.Z'),
 });
 
+export const agentPublishSchema = agentCreateSchema.extend({
+  codeFile: z.instanceof(File, { message: 'Code file is required' }),
+});
+
 export const reviewCreateSchema = z.object({
   rating: z.number().min(1).max(5),
   comment: z.string().min(10, 'Review must be at least 10 characters').max(1000),
@@ -22,5 +26,6 @@ export const searchQuerySchema = z.object({
 });
 
 export type AgentCreateInput = z.infer<typeof agentCreateSchema>;
+export type AgentPublishInput = z.infer<typeof agentPublishSchema>;
 export type ReviewCreateInput = z.infer<typeof reviewCreateSchema>;
 export type SearchQueryInput = z.infer<typeof searchQuerySchema>;
