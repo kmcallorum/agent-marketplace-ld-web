@@ -125,7 +125,7 @@ export default function Home() {
                   <CardBody>
                     <span className="text-3xl mb-2 block">{category.icon}</span>
                     <h3 className="font-semibold text-neutral-900">{category.name}</h3>
-                    <p className="text-sm text-neutral-500">{category.agent_count} agents</p>
+                    <p className="text-sm text-neutral-500">{category.agent_count} agent{category.agent_count !== 1 ? 's' : ''}</p>
                   </CardBody>
                 </Card>
               </Link>

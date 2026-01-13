@@ -50,7 +50,7 @@ export function AgentStats({ stats }: AgentStatsProps) {
               <span>Reviews</span>
             </div>
             <span className="font-semibold text-neutral-900">
-              {stats.reviews.count} ({stats.reviews.average_rating.toFixed(1)} avg)
+              {stats.reviews.count} ({(typeof stats.reviews.average_rating === 'string' ? parseFloat(stats.reviews.average_rating) : stats.reviews.average_rating).toFixed(1)} avg)
             </span>
           </div>
         </div>

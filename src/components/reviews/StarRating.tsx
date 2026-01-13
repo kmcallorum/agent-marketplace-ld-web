@@ -2,7 +2,7 @@ import { Star } from 'lucide-react';
 import clsx from 'clsx';
 
 interface StarRatingProps {
-  rating: number;
+  rating: number | string;
   maxRating?: number;
   size?: 'sm' | 'md' | 'lg';
   showValue?: boolean;
@@ -11,13 +11,14 @@ interface StarRatingProps {
 }
 
 export function StarRating({
-  rating,
+  rating: rawRating,
   maxRating = 5,
   size = 'md',
   showValue = false,
   interactive = false,
   onChange,
 }: StarRatingProps) {
+  const rating = typeof rawRating === 'string' ? parseFloat(rawRating) : rawRating;
   const sizes = {
     sm: 'w-3.5 h-3.5',
     md: 'w-5 h-5',

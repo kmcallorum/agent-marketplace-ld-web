@@ -46,7 +46,7 @@ function CategoriesList() {
                   </p>
                 )}
                 <p className="text-primary-600 font-medium">
-                  {category.agent_count} agents
+                  {category.agent_count} agent{category.agent_count !== 1 ? 's' : ''}
                 </p>
               </CardBody>
             </Card>
@@ -96,7 +96,7 @@ function CategoryDetail({ slug }: { slug: string }) {
             )}
           </div>
         </div>
-        <p className="text-neutral-500">{category.agent_count} agents in this category</p>
+        <p className="text-neutral-500">{category.agent_count} agent{category.agent_count !== 1 ? 's' : ''} in this category</p>
       </div>
 
       <AgentList

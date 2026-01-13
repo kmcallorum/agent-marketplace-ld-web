@@ -24,7 +24,7 @@ export function ReviewList({ agentSlug }: ReviewListProps) {
           <div className="flex items-center gap-2">
             <StarRating rating={data.average_rating} size="md" />
             <span className="text-neutral-600">
-              {data.average_rating.toFixed(1)} ({data.total} reviews)
+              {(typeof data.average_rating === 'string' ? parseFloat(data.average_rating) : data.average_rating).toFixed(1)} ({data.total} review{data.total !== 1 ? 's' : ''})
             </span>
           </div>
         )}
