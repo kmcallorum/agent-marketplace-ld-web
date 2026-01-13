@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Github, Twitter, Mail } from 'lucide-react';
+import { Github } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -44,32 +44,30 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <a
-                  href="https://docs.agent-marketplace.com"
+                  href="/docs"
                   className="hover:text-white transition-colors"
-                  target="_blank"
-                  rel="noopener noreferrer"
                 >
-                  Documentation
+                  API Docs
                 </a>
               </li>
               <li>
                 <a
-                  href="https://docs.agent-marketplace.com/guides"
+                  href="https://github.com/kmcallorum/agent-marketplace-ld-web"
                   className="hover:text-white transition-colors"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Guides
+                  Web Source
                 </a>
               </li>
               <li>
                 <a
-                  href="https://docs.agent-marketplace.com/api"
+                  href="https://github.com/kmcallorum/agent-marketplace-ld-api"
                   className="hover:text-white transition-colors"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  API Reference
+                  API Source
                 </a>
               </li>
             </ul>
@@ -79,26 +77,12 @@ export function Footer() {
             <h4 className="text-white font-medium mb-4">Connect</h4>
             <div className="flex gap-4">
               <a
-                href="https://github.com/agent-marketplace"
+                href="https://github.com/kmcallorum"
                 className="hover:text-white transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <Github className="w-5 h-5" />
-              </a>
-              <a
-                href="https://twitter.com/agentmarketplace"
-                className="hover:text-white transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a
-                href="mailto:hello@agent-marketplace.com"
-                className="hover:text-white transition-colors"
-              >
-                <Mail className="w-5 h-5" />
               </a>
             </div>
           </div>

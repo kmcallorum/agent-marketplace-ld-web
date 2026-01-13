@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Layout } from '@/components/layout';
 import { LoadingPage } from '@/components/common';
@@ -8,6 +8,7 @@ export default function Login() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { login, isAuthenticated } = useAuth();
+  const loginAttempted = useRef(false);
 
   const code = searchParams.get('code');
 
@@ -17,7 +18,8 @@ export default function Login() {
       return;
     }
 
-    if (code) {
+    if (code && !loginAttempted.current) {
+      loginAttempted.current = true;
       login(code).then(() => {
         navigate('/dashboard');
       });
