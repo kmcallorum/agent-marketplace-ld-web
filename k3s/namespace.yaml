@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: agent-marketplace
+  labels:
+    app.kubernetes.io/name: agent-marketplace
+    app.kubernetes.io/part-of: agent-marketplace

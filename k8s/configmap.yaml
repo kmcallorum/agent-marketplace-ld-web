@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: agent-marketplace-config
+  namespace: agent-marketplace
+  labels:
+    app.kubernetes.io/name: agent-marketplace
+data:
+  VITE_API_URL: "http://agent-marketplace-api:8000"
