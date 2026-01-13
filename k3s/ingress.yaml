@@ -8,12 +8,10 @@ metadata:
     app.kubernetes.io/name: agent-marketplace
     app.kubernetes.io/component: ingress
   annotations:
-    # Traefik-specific annotations (K3s default)
     traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
-    traefik.ingress.kubernetes.io/router.middlewares: agent-marketplace-compress@kubernetescrd
 spec:
   rules:
-    - host: agent-marketplace.local  # Replace with your domain or use IP
+    - host: agent-marketplace.local
       http:
         paths:
           - path: /
@@ -30,36 +28,3 @@ spec:
                 name: agent-marketplace-api
                 port:
                   number: 8000
----
-# Traefik Middleware for compression
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: compress
-  namespace: agent-marketplace
-spec:
-  compress: {}
----
-# Alternative: IngressRoute for more Traefik control
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: agent-marketplace-ingressroute
-  namespace: agent-marketplace
-spec:
-  entryPoints:
-    - web
-    - websecure
-  routes:
-    - match: Host(`agent-marketplace.local`) && PathPrefix(`/`)
-      kind: Rule
-      services:
-        - name: agent-marketplace-web
-          port: 80
-      middlewares:
-        - name: compress
-    - match: Host(`agent-marketplace.local`) && PathPrefix(`/api`)
-      kind: Rule
-      services:
-        - name: agent-marketplace-api
-          port: 8000
