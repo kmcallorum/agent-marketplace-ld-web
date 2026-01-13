@@ -28,16 +28,10 @@ jobs:
         run: npm run type-check
 
       - name: Run tests
-        run: npm test -- --coverage --passWithNoTests
+        run: npm test -- --run --passWithNoTests
 
       - name: Build
         run: npm run build
-
-      - name: Upload coverage
-        uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-        continue-on-error: true
 
   e2e:
     runs-on: ubuntu-latest
