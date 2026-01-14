@@ -56,19 +56,19 @@ export const adminService = {
     await api.delete(`/api/v1/admin/categories/${slug}`);
   },
 
-  // Agent management
+  // Agent management (admin endpoints)
   async getAgents(params?: { category?: string; limit?: number; offset?: number }): Promise<{ items: Agent[]; total: number }> {
-    const response = await api.get<{ items: Agent[]; total: number }>('/api/v1/agents', { params });
+    const response = await api.get<{ items: Agent[]; total: number }>('/api/v1/admin/agents', { params });
     return response.data;
   },
 
   async updateAgent(slug: string, data: AdminAgentUpdate): Promise<Agent> {
-    const response = await api.put<Agent>(`/api/v1/agents/${slug}`, data);
+    const response = await api.put<Agent>(`/api/v1/admin/agents/${slug}`, data);
     return response.data;
   },
 
   async deleteAgent(slug: string): Promise<void> {
-    await api.delete(`/api/v1/agents/${slug}`);
+    await api.delete(`/api/v1/admin/agents/${slug}`);
   },
 
   async bulkUpdateCategory(data: BulkCategoryUpdate): Promise<{ updated: number }> {
