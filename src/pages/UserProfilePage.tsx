@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Layout } from '@/components/layout';
 import { UserProfile, UserAgents, UserReviews } from '@/components/users';
 import { LoadingPage, Button } from '@/components/common';
@@ -11,6 +11,7 @@ type Tab = 'agents' | 'reviews' | 'starred';
 export default function UserProfilePage() {
   const { username } = useParams<{ username: string }>();
   const [activeTab, setActiveTab] = useState<Tab>('agents');
+  const queryClient = useQueryClient();
 
   const { data: user, isLoading: userLoading } = useQuery({
     queryKey: ['user', username],
@@ -34,7 +35,16 @@ export default function UserProfilePage() {
     queryKey: ['user-starred', username],
     queryFn: () => usersService.getStarredAgents(username!),
     enabled: !!username && activeTab === 'starred',
+    staleTime: 0,
+    gcTime: 0,
   });
+
+  // Invalidate starred cache when switching to starred tab to ensure fresh data
+  useEffect(() => {
+    if (activeTab === 'starred' && username) {
+      queryClient.invalidateQueries({ queryKey: ['user-starred', username] });
+    }
+  }, [activeTab, username, queryClient]);
 
   if (userLoading) {
     return (
