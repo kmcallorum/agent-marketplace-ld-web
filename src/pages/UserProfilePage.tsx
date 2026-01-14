@@ -99,6 +99,8 @@ export default function UserProfilePage() {
           <UserAgents
             agents={starredData?.items || []}
             isLoading={starredLoading}
+            title="Starred Agents"
+            emptyMessage="No starred agents yet"
           />
         )}
       </div>

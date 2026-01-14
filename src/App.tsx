@@ -6,6 +6,7 @@ import { store } from '@/store';
 import { ErrorBoundary } from '@/components/common';
 import {
   Home,
+  Admin,
   AgentDetailPage,
   Search,
   Categories,
@@ -35,6 +36,7 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/admin" element={<Admin />} />
               <Route path="/agents/:slug" element={<AgentDetailPage />} />
               <Route path="/search" element={<Search />} />
               <Route path="/categories" element={<Categories />} />

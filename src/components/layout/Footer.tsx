@@ -9,7 +9,7 @@ export function Footer() {
           <div>
             <h3 className="text-white font-semibold mb-4">Agent Marketplace</h3>
             <p className="text-sm">
-              Discover, share, and install AI agents built with pytest-agents.
+              Discover, share, and install Claude extensions: agents, MCP servers, and skills.
             </p>
           </div>
 

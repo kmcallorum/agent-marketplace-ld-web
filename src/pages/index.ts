@@ -1,4 +1,5 @@
 export { default as Home } from './Home';
+export { default as Admin } from './Admin';
 export { default as AgentDetailPage } from './AgentDetailPage';
 export { default as Search } from './Search';
 export { default as Categories } from './Categories';

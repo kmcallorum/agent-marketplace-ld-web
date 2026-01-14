@@ -89,11 +89,20 @@ export const agentsService = {
   },
 
   star: async (slug: string): Promise<void> => {
-    await api.post(`/api/v1/agents/${slug}/star`);
+    const response = await api.post(`/api/v1/agents/${slug}/star`);
+    // 204 No Content is success - axios resolves but response.data is empty string
+    if (response.status === 204 || response.status === 200) {
+      return;
+    }
+    throw new Error(`Unexpected status: ${response.status}`);
   },
 
   unstar: async (slug: string): Promise<void> => {
-    await api.delete(`/api/v1/agents/${slug}/star`);
+    const response = await api.delete(`/api/v1/agents/${slug}/star`);
+    if (response.status === 204 || response.status === 200) {
+      return;
+    }
+    throw new Error(`Unexpected status: ${response.status}`);
   },
 
   getStats: async (slug: string): Promise<AgentStats> => {

@@ -96,7 +96,7 @@ export default function Publish() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary-600">4.</span>
-                  Follow pytest-agents conventions
+                  Follow Claude extension conventions
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary-600">5.</span>

@@ -5,14 +5,14 @@ interface AgentsState {
   featured: Agent[];
   trending: Agent[];
   recent: Agent[];
-  starredSlugs: Set<string>;
+  starredSlugs: string[];
 }
 
 const initialState: AgentsState = {
   featured: [],
   trending: [],
   recent: [],
-  starredSlugs: new Set(),
+  starredSlugs: [],
 };
 
 const agentsSlice = createSlice({
@@ -29,15 +29,15 @@ const agentsSlice = createSlice({
       state.recent = action.payload;
     },
     addStarredAgent: (state, action: PayloadAction<string>) => {
-      state.starredSlugs = new Set([...state.starredSlugs, action.payload]);
+      if (!state.starredSlugs.includes(action.payload)) {
+        state.starredSlugs.push(action.payload);
+      }
     },
     removeStarredAgent: (state, action: PayloadAction<string>) => {
-      const newSet = new Set(state.starredSlugs);
-      newSet.delete(action.payload);
-      state.starredSlugs = newSet;
+      state.starredSlugs = state.starredSlugs.filter(slug => slug !== action.payload);
     },
     setStarredAgents: (state, action: PayloadAction<string[]>) => {
-      state.starredSlugs = new Set(action.payload);
+      state.starredSlugs = action.payload;
     },
   },
 });

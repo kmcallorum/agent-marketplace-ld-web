@@ -26,8 +26,8 @@ export default function Home() {
             Discover AI Agents
           </h1>
           <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
-            The marketplace for pytest-agents. Find, install, and share AI agents
-            that supercharge your development workflow.
+            The marketplace for Claude extensions. Find, install, and share agents,
+            MCP servers, and skills that supercharge your workflow.
           </p>
           <div className="max-w-lg mx-auto mb-8">
             <SearchBar placeholder="Search for agents..." />

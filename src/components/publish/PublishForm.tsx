@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input, Textarea, Select } from '@/components/common';
 import { FileUploader } from './FileUploader';
 import { agentPublishSchema, AgentPublishInput } from '@/utils/validation';
-import { CATEGORIES } from '@/utils/constants';
+import { useCategories } from '@/hooks';
 
 interface PublishFormProps {
   onSubmit: (data: AgentPublishInput) => void;
@@ -11,6 +11,7 @@ interface PublishFormProps {
 }
 
 export function PublishForm({ onSubmit, isLoading }: PublishFormProps) {
+  const { data: categoriesData, isLoading: categoriesLoading } = useCategories();
   const {
     register,
     handleSubmit,
@@ -25,10 +26,11 @@ export function PublishForm({ onSubmit, isLoading }: PublishFormProps) {
   });
 
   const codeFile = watch('codeFile');
+  const categories = categoriesData?.categories || [];
 
-  const categoryOptions = CATEGORIES.map((c) => ({
+  const categoryOptions = categories.map((c) => ({
     value: c.slug,
-    label: `${c.icon} ${c.name}`,
+    label: c.name,
   }));
 
   return (
@@ -52,8 +54,9 @@ export function PublishForm({ onSubmit, isLoading }: PublishFormProps) {
         <Select
           label="Category"
           options={categoryOptions}
-          placeholder="Select a category"
+          placeholder={categoriesLoading ? "Loading categories..." : "Select a category"}
           error={errors.category?.message}
+          disabled={categoriesLoading}
           {...register('category')}
         />
 

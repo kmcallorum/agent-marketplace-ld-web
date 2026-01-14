@@ -10,16 +10,51 @@ interface InstallButtonProps {
   agent: Agent;
 }
 
+function getInstallCommand(agent: Agent): { command: string; label: string } {
+  const category = agent.category?.toLowerCase() || '';
+
+  if (category.includes('mcp')) {
+    return {
+      command: `claude mcp add ${agent.slug}`,
+      label: 'Add to Claude',
+    };
+  }
+  if (category.includes('skill')) {
+    return {
+      command: `claude skill install ${agent.slug}`,
+      label: 'Install Skill',
+    };
+  }
+  // Default for agents/tools
+  return {
+    command: `claude agent add ${agent.slug}`,
+    label: 'Install',
+  };
+}
+
 export function InstallButton({ agent }: InstallButtonProps) {
   const { isAuthenticated } = useAuth();
   const { isStarred, toggleStar, isLoading: starLoading } = useStarAgent(agent.slug);
   const [copied, setCopied] = useState(false);
 
-  const installCommand = `pytest-agents install ${agent.slug}`;
+  const { command: installCommand, label: installLabel } = getInstallCommand(agent);
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(installCommand);
+      // Try modern clipboard API first
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(installCommand);
+      } else {
+        // Fallback for HTTP sites
+        const textArea = document.createElement('textarea');
+        textArea.value = installCommand;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      }
       setCopied(true);
       toast.success('Copied to clipboard!');
       setTimeout(() => setCopied(false), 2000);
@@ -36,7 +71,7 @@ export function InstallButton({ agent }: InstallButtonProps) {
   return (
     <Card>
       <CardBody>
-        <h3 className="text-lg font-semibold text-neutral-900 mb-4">Install</h3>
+        <h3 className="text-lg font-semibold text-neutral-900 mb-4">{installLabel}</h3>
 
         <div className="mb-4">
           <div className="flex items-center gap-2 bg-neutral-100 rounded-lg p-3">

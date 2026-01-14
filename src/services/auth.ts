@@ -31,6 +31,11 @@ export const authService = {
     return response.data;
   },
 
+  getStarredAgents: async (): Promise<string[]> => {
+    const response = await api.get<{ starred: string[] }>('/api/v1/auth/me/starred');
+    return response.data.starred;
+  },
+
   saveTokens: (accessToken: string, refreshToken: string): void => {
     localStorage.setItem(AUTH_TOKEN_KEY, accessToken);
     localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);

@@ -2,17 +2,6 @@
 // Only use fallback if VITE_API_URL is undefined (not just empty)
 export const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'https://api.agent-marketplace.com';
 
-export const CATEGORIES = [
-  { slug: 'pm', name: 'Project Management', icon: '📋' },
-  { slug: 'research', name: 'Research', icon: '🔬' },
-  { slug: 'testing', name: 'Testing', icon: '🧪' },
-  { slug: 'code-review', name: 'Code Review', icon: '👀' },
-  { slug: 'documentation', name: 'Documentation', icon: '📝' },
-  { slug: 'devops', name: 'DevOps', icon: '🚀' },
-  { slug: 'security', name: 'Security', icon: '🔒' },
-  { slug: 'data', name: 'Data & Analytics', icon: '📊' },
-] as const;
-
 export const SORT_OPTIONS = [
   { value: 'relevance', label: 'Relevance' },
   { value: 'downloads', label: 'Most Downloads' },

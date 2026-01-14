@@ -1,9 +1,11 @@
 import { useSearchParams } from 'react-router-dom';
 import { Select } from '@/components/common';
-import { CATEGORIES, SORT_OPTIONS } from '@/utils/constants';
+import { SORT_OPTIONS } from '@/utils/constants';
+import { useCategories } from '@/hooks';
 
 export function SearchFilters() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { data: categoriesData } = useCategories();
 
   const category = searchParams.get('category') || '';
   const sort = searchParams.get('sort') || 'relevance';
@@ -19,9 +21,10 @@ export function SearchFilters() {
     setSearchParams(newParams);
   };
 
+  const categories = categoriesData?.categories || [];
   const categoryOptions = [
     { value: '', label: 'All Categories' },
-    ...CATEGORIES.map((c) => ({ value: c.slug, label: c.name })),
+    ...categories.map((c) => ({ value: c.slug, label: c.name })),
   ];
 
   const sortOptions = SORT_OPTIONS.map((s) => ({

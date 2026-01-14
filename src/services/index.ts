@@ -1,4 +1,5 @@
 export { default as api } from './api';
+export { adminService } from './admin';
 export { authService } from './auth';
 export { agentsService } from './agents';
 export { searchService } from './search';

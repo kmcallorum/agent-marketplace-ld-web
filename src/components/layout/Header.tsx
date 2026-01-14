@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, Github, LogOut, User, Plus } from 'lucide-react';
+import { Menu, X, Github, LogOut, User, Plus, Shield } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '@/hooks';
 import { Button, Avatar } from '@/components/common';
@@ -112,6 +112,16 @@ export function Header() {
                           <Menu className="w-4 h-4" />
                           Dashboard
                         </Link>
+                        {user.role === 'admin' && (
+                          <Link
+                            to="/admin"
+                            className="flex items-center gap-2 px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50"
+                            onClick={() => setUserMenuOpen(false)}
+                          >
+                            <Shield className="w-4 h-4" />
+                            Admin
+                          </Link>
+                        )}
                         <hr className="my-1 border-neutral-200" />
                         <button
                           onClick={handleLogout}

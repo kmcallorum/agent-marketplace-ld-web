@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { loginWithGithub, logout, fetchCurrentUser, setLoading } from '@/store/authSlice';
+import { setStarredAgents } from '@/store/agentsSlice';
 import { authService } from '@/services';
 import toast from 'react-hot-toast';
 
@@ -8,6 +9,7 @@ export function useAuth() {
   const dispatch = useAppDispatch();
   const { user, isAuthenticated, isLoading, error } = useAppSelector((state) => state.auth);
 
+  // Fetch current user on mount if we have a token
   useEffect(() => {
     const token = authService.getStoredToken();
     if (token && !isAuthenticated && !user) {
@@ -16,6 +18,17 @@ export function useAuth() {
       dispatch(setLoading(false));
     }
   }, [dispatch, isAuthenticated, user]);
+
+  // Fetch starred agents when authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      authService.getStarredAgents().then((starred) => {
+        dispatch(setStarredAgents(starred));
+      }).catch(() => {
+        // Silently fail - not critical
+      });
+    }
+  }, [dispatch, isAuthenticated]);
 
   const login = useCallback(
     async (githubCode: string) => {

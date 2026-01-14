@@ -7,6 +7,7 @@ export interface User {
   bio?: string;
   reputation: number;
   is_active: boolean;
+  role?: string;
   created_at: string;
   updated_at?: string;
 }
@@ -25,4 +26,5 @@ export interface AuthUser {
   email: string;
   avatar_url?: string;
   reputation?: number;
+  role?: string;
 }

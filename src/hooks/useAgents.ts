@@ -46,17 +46,30 @@ export function useStarAgent(slug: string) {
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
   const starredSlugs = useAppSelector((state) => state.agents.starredSlugs);
-  const isStarred = starredSlugs.has(slug);
+  const isStarred = starredSlugs.includes(slug);
+
+  const invalidateStarQueries = () => {
+    queryClient.invalidateQueries({ queryKey: ['agent', slug] });
+    queryClient.invalidateQueries({ queryKey: ['user-starred'] });
+  };
 
   const starMutation = useMutation({
     mutationFn: () => agentsService.star(slug),
     onSuccess: () => {
       dispatch(addStarredAgent(slug));
-      queryClient.invalidateQueries({ queryKey: ['agent', slug] });
+      invalidateStarQueries();
       toast.success('Agent starred!');
     },
-    onError: () => {
-      toast.error('Failed to star agent');
+    onError: (error: any) => {
+      const status = error?.response?.status || error?.status || 'no-status';
+      // 409 means already starred - just update local state
+      if (status === 409) {
+        dispatch(addStarredAgent(slug));
+        invalidateStarQueries();
+        toast.success('Agent already starred');
+        return;
+      }
+      toast.error(`Failed to star (${status}: ${error?.message || 'unknown'})`);
     },
   });
 
@@ -64,11 +77,19 @@ export function useStarAgent(slug: string) {
     mutationFn: () => agentsService.unstar(slug),
     onSuccess: () => {
       dispatch(removeStarredAgent(slug));
-      queryClient.invalidateQueries({ queryKey: ['agent', slug] });
+      invalidateStarQueries();
       toast.success('Agent unstarred');
     },
-    onError: () => {
-      toast.error('Failed to unstar agent');
+    onError: (error: any) => {
+      const status = error?.response?.status || error?.status || 'no-status';
+      // 404 "Agent not starred" means already unstarred - just update local state
+      if (status === 404) {
+        dispatch(removeStarredAgent(slug));
+        invalidateStarQueries();
+        toast.success('Agent already unstarred');
+        return;
+      }
+      toast.error(`Failed to unstar (${status}: ${error?.message || 'unknown'})`);
     },
   });
 

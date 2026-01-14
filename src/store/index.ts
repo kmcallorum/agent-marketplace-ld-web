@@ -10,13 +10,6 @@ export const store = configureStore({
     agents: agentsReducer,
     ui: uiReducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredPaths: ['agents.starredSlugs'],
-        ignoredActions: ['agents/addStarredAgent', 'agents/removeStarredAgent', 'agents/setStarredAgents'],
-      },
-    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
