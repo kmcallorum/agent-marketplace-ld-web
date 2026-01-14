@@ -6,8 +6,24 @@ import { useSearch } from '@/hooks';
 export default function Search() {
   const [searchParams] = useSearchParams();
   const query = searchParams.get('q') || '';
+  const category = searchParams.get('category') || '';
 
   const { data, isLoading } = useSearch();
+
+  const hasActiveSearch = query || category;
+
+  const getTitle = () => {
+    if (query && category) {
+      return `Search Results for "${query}" in ${category}`;
+    }
+    if (query) {
+      return `Search Results for "${query}"`;
+    }
+    if (category) {
+      return `Browse ${category}`;
+    }
+    return 'Browse Agents';
+  };
 
   return (
     <Layout>
@@ -23,10 +39,10 @@ export default function Search() {
 
         {/* Results */}
         <main className="md:col-span-3">
-          {query ? (
+          {hasActiveSearch ? (
             <>
               <h1 className="text-3xl font-bold text-neutral-900 mb-6">
-                Search Results for "{query}"
+                {getTitle()}
               </h1>
               <SearchResults
                 results={data?.items || []}
@@ -40,7 +56,7 @@ export default function Search() {
                 Search for Agents
               </h2>
               <p className="text-neutral-500">
-                Enter a search term above to find agents
+                Enter a search term or select a category to browse
               </p>
             </div>
           )}
