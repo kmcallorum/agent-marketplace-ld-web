@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, Github, LogOut, User, Plus, Shield } from 'lucide-react';
+import { Menu, X, Github, LogOut, User, Plus, Shield, HelpCircle } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '@/hooks';
 import { Button, Avatar } from '@/components/common';
@@ -53,6 +53,13 @@ export function Header() {
                 className="text-neutral-600 hover:text-neutral-900 transition-colors"
               >
                 Trending
+              </Link>
+              <Link
+                to="/help"
+                className="text-neutral-600 hover:text-neutral-900 transition-colors flex items-center gap-1"
+              >
+                <HelpCircle className="w-4 h-4" />
+                Help
               </Link>
             </nav>
           </div>
@@ -185,6 +192,14 @@ export function Header() {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Trending
+              </Link>
+              <Link
+                to="/help"
+                className="px-4 py-2 text-neutral-600 hover:bg-neutral-50 rounded-lg flex items-center gap-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <HelpCircle className="w-4 h-4" />
+                Help
               </Link>
               {isAuthenticated && (
                 <Link

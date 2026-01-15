@@ -16,6 +16,7 @@ import {
   Dashboard,
   NotFound,
   Login,
+  Help,
 } from '@/pages';
 
 const queryClient = new QueryClient({
@@ -46,6 +47,7 @@ function App() {
               <Route path="/publish" element={<Publish />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/help" element={<Help />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

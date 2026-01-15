@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 import { Layout } from '@/components/layout';
 import { Card, CardBody, CardHeader, Button, Input, Textarea, Modal } from '@/components/common';
 import { useAuth } from '@/hooks';
-import { adminService, type Category, type CategoryCreate, type CategoryUpdate, type AdminAgentUpdate } from '@/services/admin';
-import { Pencil, Trash2, Plus, FolderInput, Check } from 'lucide-react';
+import { adminService, type Category, type CategoryCreate, type CategoryUpdate, type AdminAgentUpdate, type AdminUser, type AdminUserUpdate } from '@/services/admin';
+import { Pencil, Trash2, Plus, FolderInput, Check, Ban, UserCheck, Users, Search } from 'lucide-react';
 import toast from 'react-hot-toast';
 import type { Agent } from '@/types';
 
-type AdminTab = 'categories' | 'agents';
+type AdminTab = 'categories' | 'agents' | 'users';
 
 export default function Admin() {
   const { user, isAuthenticated, isLoading: authLoading } = useAuth();
@@ -29,6 +29,17 @@ export default function Admin() {
   const [selectedAgents, setSelectedAgents] = useState<Set<string>>(new Set());
   const [isBulkModalOpen, setIsBulkModalOpen] = useState(false);
   const [bulkTargetCategory, setBulkTargetCategory] = useState<string>('');
+
+  // Users state
+  const [users, setUsers] = useState<AdminUser[]>([]);
+  const [usersLoading, setUsersLoading] = useState(false);
+  const [usersTotal, setUsersTotal] = useState(0);
+  const [userSearch, setUserSearch] = useState('');
+  const [editingUser, setEditingUser] = useState<AdminUser | null>(null);
+  const [isUserModalOpen, setIsUserModalOpen] = useState(false);
+  const [isBlockModalOpen, setIsBlockModalOpen] = useState(false);
+  const [blockingUser, setBlockingUser] = useState<AdminUser | null>(null);
+  const [blockReason, setBlockReason] = useState('');
 
   // Form state for new category
   const [newCategory, setNewCategory] = useState<CategoryCreate>({
@@ -54,6 +65,13 @@ export default function Admin() {
     is_validated: false,
   });
 
+  // Form state for editing user
+  const [editUserForm, setEditUserForm] = useState<AdminUserUpdate>({
+    role: 'user',
+    bio: '',
+    is_active: true,
+  });
+
   const loadCategories = async () => {
     try {
       const data = await adminService.getCategories();
@@ -77,6 +95,19 @@ export default function Admin() {
     }
   };
 
+  const loadUsers = async (search?: string) => {
+    setUsersLoading(true);
+    try {
+      const data = await adminService.getUsers({ search: search || undefined, limit: 100 });
+      setUsers(data.items);
+      setUsersTotal(data.total);
+    } catch {
+      toast.error('Failed to load users');
+    } finally {
+      setUsersLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (isAuthenticated && user?.role === 'admin') {
       loadCategories();
@@ -90,6 +121,12 @@ export default function Admin() {
       loadAgents(categoryFilter);
     }
   }, [activeTab, categoryFilter, isAuthenticated, user?.role]);
+
+  useEffect(() => {
+    if (activeTab === 'users' && isAuthenticated && user?.role === 'admin') {
+      loadUsers(userSearch);
+    }
+  }, [activeTab, userSearch, isAuthenticated, user?.role]);
 
   // Category handlers
   const handleCreateCategory = async (e: React.FormEvent) => {
@@ -265,6 +302,92 @@ export default function Admin() {
     }
   };
 
+  // User handlers
+  const handleEditUserClick = (u: AdminUser) => {
+    setEditingUser(u);
+    setEditUserForm({
+      role: u.role as 'user' | 'admin',
+      bio: u.bio || '',
+      is_active: u.is_active,
+    });
+    setIsUserModalOpen(true);
+  };
+
+  const handleUpdateUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingUser) return;
+
+    setIsSaving(true);
+    try {
+      const updated = await adminService.updateUser(editingUser.id, editUserForm);
+      setUsers(users.map((u) => (u.id === updated.id ? updated : u)));
+      setIsUserModalOpen(false);
+      setEditingUser(null);
+      toast.success('User updated');
+    } catch (error: any) {
+      const detail = error?.response?.data?.detail || 'Failed to update user';
+      toast.error(detail);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleBlockUserClick = (u: AdminUser) => {
+    setBlockingUser(u);
+    setBlockReason('');
+    setIsBlockModalOpen(true);
+  };
+
+  const handleBlockUser = async () => {
+    if (!blockingUser || blockReason.length < 10) {
+      toast.error('Please provide a reason (min 10 characters)');
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const updated = await adminService.blockUser(blockingUser.id, { blocked_reason: blockReason });
+      setUsers(users.map((u) => (u.id === updated.id ? updated : u)));
+      setIsBlockModalOpen(false);
+      setBlockingUser(null);
+      setBlockReason('');
+      toast.success('User blocked');
+    } catch (error: any) {
+      const detail = error?.response?.data?.detail || 'Failed to block user';
+      toast.error(detail);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleUnblockUser = async (u: AdminUser) => {
+    if (!confirm(`Unblock user "${u.username}"?`)) return;
+
+    try {
+      const updated = await adminService.unblockUser(u.id);
+      setUsers(users.map((usr) => (usr.id === updated.id ? updated : usr)));
+      toast.success('User unblocked');
+    } catch (error: any) {
+      const detail = error?.response?.data?.detail || 'Failed to unblock user';
+      toast.error(detail);
+    }
+  };
+
+  const handleDeleteUser = async (u: AdminUser) => {
+    if (!confirm(`Delete user "${u.username}"? This will also delete all their agents, reviews, and stars. This cannot be undone.`)) {
+      return;
+    }
+
+    try {
+      await adminService.deleteUser(u.id);
+      setUsers(users.filter((usr) => usr.id !== u.id));
+      toast.success('User deleted');
+    } catch (error: any) {
+      const detail = error?.response?.data?.detail || 'Failed to delete user';
+      toast.error(detail);
+    }
+  };
+
   if (authLoading || isLoading) {
     return (
       <Layout>
@@ -317,6 +440,13 @@ export default function Admin() {
             onClick={() => setActiveTab('agents')}
           >
             Agents
+          </Button>
+          <Button
+            variant={activeTab === 'users' ? 'primary' : 'ghost'}
+            onClick={() => setActiveTab('users')}
+            leftIcon={<Users className="w-4 h-4" />}
+          >
+            Users
           </Button>
         </div>
 
@@ -588,6 +718,135 @@ export default function Admin() {
           </div>
         )}
 
+        {/* Users Tab */}
+        {activeTab === 'users' && (
+          <div className="grid gap-6">
+            {/* Search */}
+            <Card>
+              <CardBody>
+                <div className="flex items-center gap-4">
+                  <div className="flex-1">
+                    <div className="relative">
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
+                      <input
+                        type="text"
+                        placeholder="Search users by username or email..."
+                        className="w-full pl-10 pr-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                        value={userSearch}
+                        onChange={(e) => setUserSearch(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <span className="text-sm text-neutral-500">
+                    {usersTotal} user{usersTotal !== 1 ? 's' : ''}
+                  </span>
+                </div>
+              </CardBody>
+            </Card>
+
+            {/* Users List */}
+            <Card>
+              <CardHeader>
+                <h2 className="text-lg font-semibold">Users</h2>
+              </CardHeader>
+              <CardBody>
+                {usersLoading ? (
+                  <p className="text-neutral-500">Loading users...</p>
+                ) : users.length === 0 ? (
+                  <p className="text-neutral-500">No users found.</p>
+                ) : (
+                  <div className="divide-y divide-neutral-200">
+                    {users.map((u) => (
+                      <div key={u.id} className="py-4 flex items-center gap-4">
+                        {/* Avatar */}
+                        <div className="w-10 h-10 rounded-full bg-neutral-200 overflow-hidden flex-shrink-0">
+                          {u.avatar_url ? (
+                            <img src={u.avatar_url} alt={u.username} className="w-full h-full object-cover" />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-neutral-500">
+                              {u.username.charAt(0).toUpperCase()}
+                            </div>
+                          )}
+                        </div>
+
+                        {/* User Info */}
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium text-neutral-900">{u.username}</span>
+                            {u.role === 'admin' && (
+                              <span className="px-2 py-0.5 text-xs bg-purple-100 text-purple-700 rounded">
+                                Admin
+                              </span>
+                            )}
+                            {u.is_blocked && (
+                              <span className="px-2 py-0.5 text-xs bg-red-100 text-red-700 rounded">
+                                Blocked
+                              </span>
+                            )}
+                            {!u.is_active && (
+                              <span className="px-2 py-0.5 text-xs bg-yellow-100 text-yellow-700 rounded">
+                                Inactive
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-sm text-neutral-500">{u.email}</p>
+                          <p className="text-xs text-neutral-400 mt-1">
+                            GitHub ID: {u.github_id} | Joined: {new Date(u.created_at).toLocaleDateString()}
+                            {u.is_blocked && u.blocked_reason && (
+                              <span className="text-red-500"> | Blocked: {u.blocked_reason}</span>
+                            )}
+                          </p>
+                        </div>
+
+                        {/* Actions */}
+                        <div className="flex items-center gap-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleEditUserClick(u)}
+                            title="Edit user"
+                          >
+                            <Pencil className="w-4 h-4" />
+                          </Button>
+                          {u.is_blocked ? (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleUnblockUser(u)}
+                              title="Unblock user"
+                            >
+                              <UserCheck className="w-4 h-4 text-green-500" />
+                            </Button>
+                          ) : (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleBlockUserClick(u)}
+                              title="Block user"
+                              disabled={u.role === 'admin'}
+                            >
+                              <Ban className={`w-4 h-4 ${u.role === 'admin' ? 'text-neutral-300' : 'text-orange-500'}`} />
+                            </Button>
+                          )}
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDeleteUser(u)}
+                            title={u.role === 'admin' ? 'Cannot delete admin' : 'Delete user'}
+                            disabled={u.role === 'admin'}
+                          >
+                            <Trash2 className={`w-4 h-4 ${u.role === 'admin' ? 'text-neutral-300' : 'text-red-500'}`} />
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </CardBody>
+            </Card>
+          </div>
+        )}
+
         {/* Edit Category Modal */}
         <Modal
           isOpen={isCategoryModalOpen}
@@ -740,6 +999,100 @@ export default function Admin() {
                 disabled={!bulkTargetCategory}
               >
                 Move Agents
+              </Button>
+            </div>
+          </div>
+        </Modal>
+
+        {/* Edit User Modal */}
+        <Modal
+          isOpen={isUserModalOpen}
+          onClose={() => setIsUserModalOpen(false)}
+          title={`Edit User: ${editingUser?.username}`}
+          size="md"
+        >
+          <form onSubmit={handleUpdateUser} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-neutral-700 mb-1">
+                Role
+              </label>
+              <select
+                className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                value={editUserForm.role || 'user'}
+                onChange={(e) => setEditUserForm({ ...editUserForm, role: e.target.value as 'user' | 'admin' })}
+              >
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+            <Textarea
+              label="Bio"
+              value={editUserForm.bio || ''}
+              onChange={(e) => setEditUserForm({ ...editUserForm, bio: e.target.value })}
+              rows={3}
+              placeholder="User biography..."
+            />
+            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={editUserForm.is_active ?? true}
+                onChange={(e) => setEditUserForm({ ...editUserForm, is_active: e.target.checked })}
+                className="w-4 h-4 text-primary-500 border-neutral-300 rounded focus:ring-primary-500"
+              />
+              <span className="text-sm text-neutral-700">Active</span>
+            </label>
+            <div className="flex justify-end gap-3">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsUserModalOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button type="submit" isLoading={isSaving}>
+                Save Changes
+              </Button>
+            </div>
+          </form>
+        </Modal>
+
+        {/* Block User Modal */}
+        <Modal
+          isOpen={isBlockModalOpen}
+          onClose={() => setIsBlockModalOpen(false)}
+          title={`Block User: ${blockingUser?.username}`}
+          size="md"
+        >
+          <div className="space-y-4">
+            <p className="text-neutral-600">
+              This will prevent the user from logging in. They will see the block reason when they try to access the site.
+            </p>
+            <Textarea
+              label="Block Reason"
+              value={blockReason}
+              onChange={(e) => setBlockReason(e.target.value)}
+              rows={3}
+              placeholder="Reason for blocking this user (min 10 characters)..."
+              required
+            />
+            <p className="text-xs text-neutral-500">
+              The user will be shown this message: "Your account has been blocked by the administration team. If you wish to discuss this, please email admin or submit a support ticket."
+            </p>
+            <div className="flex justify-end gap-3">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsBlockModalOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleBlockUser}
+                isLoading={isSaving}
+                disabled={blockReason.length < 10}
+                className="bg-red-600 hover:bg-red-700"
+              >
+                Block User
               </Button>
             </div>
           </div>
