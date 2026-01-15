@@ -31,7 +31,14 @@ test.describe('Authentication Flow', () => {
     const currentUrl = page.url();
     
     // Check if we got to GitHub OAuth or if there's an error
-    const isGitHubOAuth = currentUrl.includes('github.com');
+    // Use proper URL parsing to prevent bypass via malicious URLs like 'evil.com/github.com'
+    let isGitHubOAuth = false;
+    try {
+      const parsedUrl = new URL(currentUrl);
+      isGitHubOAuth = parsedUrl.hostname === 'github.com' || parsedUrl.hostname.endsWith('.github.com');
+    } catch {
+      isGitHubOAuth = false;
+    }
     const is404 = await page.locator('text=/404|not found/i').isVisible().catch(() => false);
     
     if (is404) {

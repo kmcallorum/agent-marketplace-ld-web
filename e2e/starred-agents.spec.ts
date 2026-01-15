@@ -56,7 +56,7 @@ async function ensureLoggedIn(page: Page): Promise<void> {
     throw new Error('Login verification failed - could not find username or profile link');
   }
   
-  console.log('✅ Logged in as', TEST_USER.username);
+  console.log('✅ Logged in successfully');
 }
 
 test.describe('Starred Agents Workflow', () => {
