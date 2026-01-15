@@ -34,8 +34,8 @@ const issueTypes: IssueTypeOption[] = [
   },
 ];
 
-// GitHub repo for issues - adjust as needed
-const GITHUB_ISSUES_REPO = 'kevinmcallorum/agent-marketplace';
+// GitHub repo for issues
+const GITHUB_ISSUES_REPO = 'kmcallorum/agent-marketplace-ld-web';
 
 export default function Help() {
   const { user } = useAuth();
