@@ -30,7 +30,7 @@ export function useSearch(params?: UseSearchParams) {
         limit,
         offset,
       }),
-    enabled: !!query || !!category,
+    enabled: true,
   });
 }
 
