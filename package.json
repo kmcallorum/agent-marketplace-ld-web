@@ -22,7 +22,7 @@
     "lucide-react": "^0.562.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "react-hook-form": "^7.49.0",
+    "react-hook-form": "^7.71.1",
     "react-hot-toast": "^2.4.1",
     "react-markdown": "^10.1.0",
     "react-redux": "^9.0.0",
