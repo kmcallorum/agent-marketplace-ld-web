@@ -37,8 +37,13 @@ export const authService = {
   },
 
   saveTokens: (accessToken: string, refreshToken: string): void => {
-    localStorage.setItem(AUTH_TOKEN_KEY, accessToken);
-    localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
+    try {
+      localStorage.setItem(AUTH_TOKEN_KEY, accessToken);
+      localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
+    } catch (e) {
+      console.error('Failed to save tokens to localStorage:', e);
+      // Storage might be full or blocked - tokens won't persist but login can continue
+    }
   },
 
   getStoredToken: (): string | null => {

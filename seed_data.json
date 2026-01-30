@@ -1,0 +1,270 @@
+{
+  "agents": [
+    {
+      "name": "Context7 MCP",
+      "description": "Context7 MCP dynamically fetches up-to-date, version-specific documentation and code examples from official sources and injects them directly into your Claude Code prompts. No more outdated API references or hallucinated methods.\n\n## Features\n- Real-time Documentation - Fetches current official documentation from library sources\n- Version-Specific Content - Gets documentation for the exact version you're using\n- Automatic Integration - Seamlessly injects relevant docs into AI context\n- Universal Compatibility - Works with Claude Code, Cursor, Windsurf, and more\n\n## Installation\n```bash\nclaude mcp add context7 -- npx -y @upstash/context7-mcp@latest\n```\n\n## Usage\nAdd `use context7` to your prompts or set up a rule to auto-invoke:\n```\nCreate a Next.js middleware that checks for a valid JWT. use context7\n```\n\n## Why Use This?\nEliminates the frustration of outdated AI code suggestions. Instead of debugging deprecated methods, Context7 ensures Claude provides current, working examples on first try.",
+      "category": "MCP Servers",
+      "version": "2.1.0",
+      "url": "https://github.com/upstash/context7"
+    },
+    {
+      "name": "GitHub MCP Server",
+      "description": "Official GitHub MCP server that connects Claude Code to GitHub's API. Read issues, manage PRs, trigger CI/CD, and analyze commits directly from your terminal.\n\n## Features\n- Repository Management - Create, clone, fork repositories\n- Pull Request Operations - Create, review, merge PRs with AI assistance\n- Issue Tracking - Create, update, search issues\n- CI/CD Integration - Trigger and monitor GitHub Actions\n- Code Search - Search across repositories and commits\n\n## Installation\n```bash\nclaude mcp add github -- npx -y @modelcontextprotocol/server-github\n```\n\n## Configuration\nRequires GITHUB_PERSONAL_ACCESS_TOKEN environment variable.\n\n## Use Cases\n- \"Find all issues about authentication\"\n- \"Create a PR from my feature branch with a summary of changes\"\n- \"Pull the commit that introduced this bug\"",
+      "category": "MCP Servers",
+      "version": "1.0.0",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/github"
+    },
+    {
+      "name": "Sequential Thinking MCP",
+      "description": "Revolutionizes how Claude Code approaches complex problem-solving by introducing a structured, reflective thinking process that mirrors human cognitive patterns.\n\n## Features\n- Structured Reasoning - Methodically works through problems step-by-step\n- Self-Revision - Revises approaches when needed\n- Extended Context - Maintains context across reasoning chains\n- Complex Task Handling - Perfect for architectural decisions and debugging\n\n## Installation\n```bash\nclaude mcp add sequential-thinking -- npx -y @modelcontextprotocol/server-sequential-thinking\n```\n\n## When to Use\n- Intricate architectural decisions\n- Debugging elusive issues\n- Planning large-scale features\n- Complex refactoring tasks\n\nTransforms Claude from a simple code generator into a thoughtful development partner.",
+      "category": "MCP Servers",
+      "version": "1.0.0",
+      "url": "https://github.com/modelcontextprotocol/servers"
+    },
+    {
+      "name": "Playwright MCP Server",
+      "description": "Provides Claude Code with the ability to interact with web applications using structured accessibility trees rather than screenshot-based approaches.\n\n## Features\n- Browser Automation - Navigate, click, fill forms, extract data\n- Accessibility Tree Analysis - Semantic understanding of web pages\n- End-to-End Testing - Build comprehensive test suites\n- Web Scraping - Reliable data extraction\n\n## Installation\n```bash\nclaude mcp add playwright -- npx -y @anthropic/mcp-server-playwright\n```\n\n## Advantages\n- More reliable than visual/screenshot approaches\n- Faster execution\n- Identifies elements by roles and properties\n- Works with dynamic content",
+      "category": "MCP Servers",
+      "version": "1.0.0",
+      "url": "https://github.com/anthropics/mcp-server-playwright"
+    },
+    {
+      "name": "PostgreSQL MCP Server",
+      "description": "Simplifies database management with natural language queries for advanced analytics. Connect Claude directly to your PostgreSQL databases.\n\n## Features\n- Natural Language Queries - Ask questions in plain English\n- Schema Exploration - Understand table structures\n- Query Generation - Generate optimized SQL\n- Data Analysis - Perform analytics without writing SQL\n\n## Installation\n```bash\nclaude mcp add postgres -- npx -y @modelcontextprotocol/server-postgres\n```\n\n## Configuration\nRequires DATABASE_URL environment variable.\n\n## Use Cases\n- \"Show me all users who signed up last month\"\n- \"What's the average order value by region?\"\n- \"Find duplicate records in the customers table\"",
+      "category": "MCP Servers",
+      "version": "1.0.0",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/postgres"
+    },
+    {
+      "name": "Supabase MCP Server",
+      "description": "Official Supabase MCP server with 20+ tools for table design, migrations, SQL queries, database branching, project management, and TypeScript type generation.\n\n## Features\n- Database Management - Tables, migrations, branching\n- Authentication - User management and policies\n- Storage - File operations\n- Type Generation - Auto-generate TypeScript types\n- Edge Functions - Deploy and manage\n\n## Installation\n```bash\nclaude mcp add supabase -- npx -y @supabase/mcp-server\n```\n\n## Perfect For\nFull-stack developers building modern backend-powered applications with Supabase.",
+      "category": "MCP Servers",
+      "version": "1.0.0",
+      "url": "https://github.com/supabase/mcp"
+    },
+    {
+      "name": "Memory MCP Server",
+      "description": "Knowledge graph-based persistent memory for Claude. Maintains context and learnings across sessions.\n\n## Features\n- Persistent Storage - Remember information across conversations\n- Knowledge Graph - Structured memory relationships\n- Context Retention - Maintain project knowledge\n- Session Continuity - Pick up where you left off\n\n## Installation\n```bash\nclaude mcp add memory -- npx -y @modelcontextprotocol/server-memory\n```\n\n## Use Cases\n- Long-running projects\n- Team knowledge bases\n- Personal preferences and patterns",
+      "category": "MCP Servers",
+      "version": "1.0.0",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/memory"
+    },
+    {
+      "name": "Exa Hallucination Detector",
+      "description": "Free and open-source tool that helps verify the accuracy of LLM-generated content instantly. Think of it as Grammarly, but for factual accuracy instead of grammar.\n\n## Features\n- Real-time Verification - Check content as you write\n- Source Validation - Cross-reference claims against sources\n- Confidence Scoring - Understand reliability of statements\n- Open Source - Fully transparent and customizable\n\n## Installation\n```bash\ngit clone https://github.com/exa-labs/exa-hallucination-detector\ncd exa-hallucination-detector\nnpm install\n```\n\n## Why Use This?\nCatch AI hallucinations before they become problems. Essential for content publishers, researchers, and anyone relying on AI-generated text.",
+      "category": "Testing & QA",
+      "version": "1.0.0",
+      "url": "https://github.com/exa-labs/exa-hallucination-detector"
+    },
+    {
+      "name": "Cleanlab TLM",
+      "description": "Trustworthy Language Model (TLM) adds a trustworthiness score to every LLM response. Compatible with any base LLM including GPT-4o, Claude, and more.\n\n## Features\n- Trustworthiness Scoring - Quantify reliability of any response\n- Hallucination Detection - Catch incorrect outputs\n- Multi-Model Support - Works with OpenAI, Anthropic, and others\n- Production Ready - Enterprise-grade reliability\n\n## Key Metrics\n- Outperforms Self-Eval and Probability-based detection\n- Catches bad responses with higher precision/recall\n- Universal uncertainty quantification\n\n## Use Cases\n- Validate AI outputs before publishing\n- Filter unreliable responses\n- Build trustworthy AI applications",
+      "category": "Testing & QA",
+      "version": "1.0.0",
+      "url": "https://cleanlab.ai/tlm/"
+    },
+    {
+      "name": "Claude Code QA Agents",
+      "description": "A collection of specialized QA agent definitions for Claude Code. Extends Claude's capabilities with focused behaviors for testing, verification, and quality assessment.\n\n## Included Agents\n- **Jenny** - Verification specialist that confirms implementations match specifications\n- **Test Quality Reviewer** - Reviews test code for quality and best practices\n- **Standards Checker** - Ensures code adheres to CLAUDE.md guidelines\n\n## Features\n- Automatic tool selection (Puppeteer, Playwright, Mobile MCP)\n- Independent assessment of feature completeness\n- Security requirements verification\n- Database schema validation\n\n## Installation\nCopy agent definitions to your Claude Code configuration.\n\n## Use Cases\n- Verify authentication systems match security requirements\n- Validate implementations fulfill stated requirements\n- Get independent assessment of feature completeness",
+      "category": "Testing & QA",
+      "version": "1.0.0",
+      "url": "https://github.com/darcyegb/ClaudeCodeAgents"
+    },
+    {
+      "name": "TestSprite",
+      "description": "AI agent for Pytest API testing that automatically generates and executes tests across API interactions. In benchmarks, outperformed GPT, Claude Sonnet, and DeepSeek by boosting pass rates from 42% to 93%.\n\n## Features\n- Automatic Test Generation - Create comprehensive API tests\n- Self-Repair - Fixes broken tests automatically\n- Cloud Sandbox - Secure test execution environment\n- MCP Integration - Works with Claude Code\n\n## Key Differentiator\nNot only identifies bugs but actively helps resolve them. Turns draft code into working software.\n\n## Metrics\n- 93% pass rate after one iteration\n- 42% baseline improvement\n- Outperforms major LLMs in test generation",
+      "category": "Testing & QA",
+      "version": "1.0.0",
+      "url": "https://www.testsprite.com/"
+    },
+    {
+      "name": "Claude-Flow",
+      "description": "The leading agent orchestration platform for Claude. Deploy intelligent multi-agent swarms, coordinate autonomous workflows, and build conversational AI systems.\n\n## Features\n- Multi-Agent Swarms - Coordinate multiple AI agents\n- Workflow Orchestration - Build complex automated pipelines\n- RAG Integration - Built-in retrieval augmented generation\n- MCP Protocol Support - Native Claude Code integration\n\n## Agent Types\n- Django/FastAPI Agent - Web framework specialist\n- Data Science Agent - Pandas, NumPy, Scikit-learn\n- ML/AI Agent - TensorFlow, PyTorch\n- Testing Agent - Pytest, unittest\n- DevOps Agent - Docker, deployment\n- Quality Agent - Black, Flake8, MyPy\n\n## Enterprise Features\n- Distributed swarm intelligence\n- Enterprise-grade architecture\n- Ranked #1 in agent-based frameworks",
+      "category": "AI Agents",
+      "version": "1.0.0",
+      "url": "https://github.com/ruvnet/claude-flow"
+    },
+    {
+      "name": "108 Specialized Claude Agents",
+      "description": "Comprehensive production-ready system combining 108 specialized AI agents, 15 multi-agent workflow orchestrators, 129 agent skills, and 72 development tools organized into focused, single-purpose plugins for Claude Code.\n\n## Includes\n- 72 Focused Plugins - Minimal token usage, composable\n- 108 Specialized Agents - Architecture, languages, infrastructure, security\n- 129 Agent Skills - Modular knowledge packages\n- 15 Workflow Orchestrators - Multi-agent coordination\n\n## Key Plugins\n- python-development (5 skills)\n- kubernetes-operations (4 skills)\n- security-scanning\n- code-review-ai\n- full-stack-orchestration\n\n## Installation\n```bash\n/plugin install python-development\n/plugin install kubernetes-operations\n```\n\nEach plugin loads only its specific agents and skills - no context bloat.",
+      "category": "AI Agents",
+      "version": "1.0.0",
+      "url": "https://github.com/wshobson/agents"
+    },
+    {
+      "name": "Docker MCP Server",
+      "description": "Build, run, and inspect containers directly through AI commands. Perfect for debugging services, generating Dockerfiles, and managing reproducible development environments.\n\n## Features\n- Container Management - Start, stop, inspect containers\n- Dockerfile Generation - AI-assisted Docker configuration\n- Log Analysis - Debug containerized services\n- Environment Management - Reproducible dev setups\n\n## Installation\nAvailable through Docker MCP Toolkit in Docker Desktop v4.43+\n\n## Use Cases\n- \"Build a container for this Node.js app\"\n- \"Show me the logs from the failing service\"\n- \"Create a multi-stage Dockerfile for production\"",
+      "category": "MCP Servers",
+      "version": "1.0.0",
+      "url": "https://hub.docker.com/mcp"
+    },
+    {
+      "name": "Zapier MCP Server",
+      "description": "Connect Claude to thousands of apps through Zapier. Automate workflows across Gmail, Sheets, CRM tools, task managers, and 2500+ other applications.\n\n## Features\n- 2500+ App Integrations - Connect virtually any service\n- Workflow Automation - Build complex multi-step automations\n- Natural Language Control - Trigger actions with plain English\n- Secure Connections - Enterprise-grade security\n\n## Use Cases\n- \"Add this lead to Salesforce and send a follow-up email\"\n- \"Create a Notion page from this conversation\"\n- \"Post this update to Slack and create a Trello card\"\n\n## Setup\nFollow Zapier MCP configuration guide for Claude Desktop.",
+      "category": "Integrations",
+      "version": "1.0.0",
+      "url": "https://zapier.com/mcp"
+    },
+    {
+      "name": "Slack MCP Server",
+      "description": "Automates Slack workflows with AI-powered message drafting, channel summaries, and workspace insights.\n\n## Features\n- Message Drafting - AI-composed messages\n- Channel Summaries - Catch up on conversations\n- Workspace Search - Find information across channels\n- Notification Automation - Smart alerting\n\n## Use Cases\n- \"Summarize what happened in #engineering today\"\n- \"Draft a message announcing the new feature\"\n- \"Find all discussions about the API redesign\"",
+      "category": "Integrations",
+      "version": "1.0.0",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/slack"
+    },
+    {
+      "name": "Filesystem MCP Server",
+      "description": "Official foundational server for secure local file operations: read, write, edit, search, and manage directories. Essential for Claude Code and Cursor users.\n\n## Features\n- File Operations - Read, write, edit files\n- Directory Management - Create, list, organize folders\n- Search - Find files and content\n- Permission Controls - Granular security settings\n\n## Security\n- Defaults to read-only access\n- Requires approval for changes\n- Sandboxed to specified directories\n- Command blocklist for safety\n\n## Installation\n```bash\nclaude mcp add filesystem -- npx -y @modelcontextprotocol/server-filesystem /path/to/allowed/dir\n```",
+      "category": "MCP Servers",
+      "version": "1.0.0",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem"
+    },
+    {
+      "name": "Wolfram GPT",
+      "description": "Advanced integration enabling ChatGPT to perform real-time data analysis, calculations, computations, and data visualization with mathematical precision.\n\n## Features\n- Complex Calculations - Math, engineering, chemistry, physics\n- Data Visualization - Charts and graphs from your data\n- Real-time Analysis - Current data processing\n- Scientific Computing - Research-grade accuracy\n\n## Use Cases\n- \"Calculate the orbital period of a satellite at 400km altitude\"\n- \"Solve this differential equation and plot the solution\"\n- \"What's the molecular weight of caffeine?\"\n\n## Availability\nFree for ChatGPT Plus subscribers via GPT Store.",
+      "category": "Data & Analytics",
+      "version": "1.0.0",
+      "url": "https://www.wolfram.com/wolfram-plugin-chatgpt/"
+    },
+    {
+      "name": "DALL-E GPT",
+      "description": "OpenAI's native image generation directly inside ChatGPT conversations. Generate original images from text prompts without leaving your chat.\n\n## Features\n- Text-to-Image - Describe what you want, get an image\n- Iterative Refinement - Adjust and regenerate\n- Style Control - Specify artistic styles\n- In-Context Generation - Part of your conversation flow\n\n## Use Cases\n- Blog graphics and thumbnails\n- Product mockups\n- Creative inspiration\n- Visual brainstorming\n\n## Availability\nBuilt into ChatGPT Plus.",
+      "category": "AI Agents",
+      "version": "1.0.0",
+      "url": "https://openai.com/dall-e-3"
+    },
+    {
+      "name": "Code Interpreter (Advanced Data Analysis)",
+      "description": "OpenAI's built-in tool for running Python code, analyzing data, and creating visualizations within ChatGPT.\n\n## Features\n- Python Execution - Run code in sandboxed environment\n- File Upload - Analyze CSVs, Excel, PDFs\n- Data Visualization - Generate charts and graphs\n- File Generation - Create downloadable outputs\n\n## Use Cases\n- Data analysis and visualization\n- File format conversions\n- Statistical analysis\n- Automated reporting\n\n## Availability\nBuilt into ChatGPT Plus and Enterprise.",
+      "category": "Data & Analytics",
+      "version": "1.0.0",
+      "url": "https://openai.com/index/chatgpt-plugins/"
+    },
+    {
+      "name": "Write For Me GPT",
+      "description": "Popular custom GPT for all types of content writing - tutorials, lists, essays, blog posts, and long-form articles.\n\n## Features\n- Multiple Formats - Blog posts, tutorials, essays, articles\n- Word Count Control - Specify desired length\n- Table Generation - Create comparison tables\n- Document Support - Upload PDFs, images, docx for context\n\n## Use Cases\n- Blog content creation\n- Tutorial writing\n- Essay drafting\n- Comparison articles\n\n## Availability\nFree in GPT Store for ChatGPT Plus users.",
+      "category": "Productivity",
+      "version": "1.0.0",
+      "url": "https://chat.openai.com/gpts"
+    },
+    {
+      "name": "Canva GPT",
+      "description": "Design tool integration allowing graphic creation directly within ChatGPT conversations.\n\n## Features\n- Text-to-Design - Describe what you need\n- Template Access - Thousands of professional templates\n- Brand Consistency - Apply your brand colors/fonts\n- Direct Export - Download or share instantly\n\n## Use Cases\n- Social media posts\n- Presentations\n- Marketing materials\n- Quick graphics\n\n## Availability\nGPT Store - requires Canva account for full features.",
+      "category": "Productivity",
+      "version": "1.0.0",
+      "url": "https://www.canva.com/chatgpt-plugin/"
+    },
+    {
+      "name": "AskYourPDF",
+      "description": "Allows ChatGPT to ingest and answer questions about PDF documents. Great for quickly extracting info from reports.\n\n## Features\n- PDF Upload - Direct document ingestion\n- Q&A Interface - Ask questions about content\n- Summary Generation - Quick document overviews\n- Citation Support - Reference specific pages\n\n## Use Cases\n- Research paper analysis\n- Contract review\n- Report summarization\n- Document Q&A",
+      "category": "Research",
+      "version": "1.0.0",
+      "url": "https://askyourpdf.com/"
+    },
+    {
+      "name": "Consensus GPT",
+      "description": "Search and synthesize results from 200M+ academic papers. Research-grade information retrieval for ChatGPT.\n\n## Features\n- Academic Search - 200M+ papers indexed\n- Citation Generation - Proper academic citations\n- Evidence Synthesis - Combine multiple sources\n- Fact-Checking - Verify claims against literature\n\n## Use Cases\n- Literature reviews\n- Research validation\n- Academic writing\n- Evidence-based answers\n\n## Availability\nFeatured in GPT Store.",
+      "category": "Research",
+      "version": "1.0.0",
+      "url": "https://consensus.app/"
+    },
+    {
+      "name": "Gemini CLI",
+      "description": "Google's open-source AI agent bringing Gemini directly to your terminal. Lightweight access with 1M token context window.\n\n## Features\n- Terminal Native - AI in your command line\n- Google Search Grounding - Real-time web context\n- MCP Support - Model Context Protocol compatible\n- GEMINI.md - Customizable system prompts\n- 1M Token Context - Massive context window\n\n## Installation\n```bash\nnpm install -g @anthropic/gemini-cli\n```\n\n## Free Tier\nLogin with personal Google account for free Gemini 2.5 Pro access.\n\n## Use Cases\n- Coding assistance\n- Content generation\n- Problem solving\n- Task automation",
+      "category": "Developer Tools",
+      "version": "1.0.0",
+      "url": "https://github.com/google-gemini/gemini-cli"
+    },
+    {
+      "name": "Gemini Code Assist",
+      "description": "Google's AI coding assistant for VS Code and JetBrains with agent mode for complex multi-step tasks.\n\n## Features\n- Agent Mode - Multi-step task completion\n- Next Edit Predictions - Anticipates your next changes\n- MCP Server Support - External service connections\n- Code Reviews - AI-powered PR reviews on GitHub\n\n## Models\n- Gemini 2.5 Pro\n- Gemini 2.5 Flash\n\n## Availability\nFree tier available. Enterprise version for GitHub integration.",
+      "category": "Developer Tools",
+      "version": "1.0.0",
+      "url": "https://cloud.google.com/gemini/docs/codeassist/overview"
+    },
+    {
+      "name": "Google Agent Development Kit (ADK)",
+      "description": "Open-source framework from Google for building and orchestrating interoperable AI agents.\n\n## Features\n- Model Agnostic - Works with multiple LLMs\n- Agent Orchestration - Coordinate multiple agents\n- Tool Integration - Connect to external services\n- State Management - Handle complex workflows\n\n## Integrations\n- LlamaIndex for RAG\n- CrewAI for multi-agent systems\n- Vercel AI SDK\n- Gemini models\n\n## Use Cases\n- Multi-agent workflows\n- Production AI systems\n- Complex automation",
+      "category": "AI Agents",
+      "version": "1.0.0",
+      "url": "https://github.com/google/adk-python"
+    },
+    {
+      "name": "Browser Use MCP",
+      "description": "MCP server allowing AI agents to control web browsers via accessibility trees for reliable automation.\n\n## Features\n- Browser Control - Navigate, click, fill forms\n- Accessibility-Based - More reliable than screenshots\n- Multi-Browser - Chrome, Firefox support\n- Automation Ready - Build E2E tests\n\n## Installation\n```bash\nclaude mcp add browser-use -- npx -y @anthropic/mcp-server-browser-use\n```\n\n## Use Cases\n- Web scraping\n- Form automation\n- Testing\n- Data extraction",
+      "category": "MCP Servers",
+      "version": "1.0.0",
+      "url": "https://github.com/anthropics/mcp-server-browser-use"
+    },
+    {
+      "name": "Perplexity MCP",
+      "description": "Research and search capabilities directly in Claude Code. Find APIs, documentation, and current information without leaving terminal.\n\n## Features\n- Web Search - Current information retrieval\n- Source Citations - Linked references\n- Research Mode - Deep topic exploration\n- API Integration - Programmatic access\n\n## Installation\n```bash\nclaude mcp add perplexity -- npx -y perplexity-mcp\n```\n\n## Configuration\nRequires PERPLEXITY_API_KEY.",
+      "category": "Research",
+      "version": "1.0.0",
+      "url": "https://www.perplexity.ai/"
+    },
+    {
+      "name": "Figma MCP Server",
+      "description": "Extract design specs, access component libraries, and sync design tokens for developer-designer collaboration.\n\n## Features\n- Design Extraction - Get specs from Figma files\n- Component Libraries - Access design system\n- Design Tokens - Sync colors, typography\n- Code Generation - Design to code\n\n## Use Cases\n- Frontend development from designs\n- Design system maintenance\n- Handoff automation\n- Style guide generation",
+      "category": "Integrations",
+      "version": "1.0.0",
+      "url": "https://github.com/anthropics/mcp-server-figma"
+    },
+    {
+      "name": "Notion MCP Server",
+      "description": "Connect Claude to your Notion workspace for document management and knowledge base access.\n\n## Features\n- Page Access - Read and write Notion pages\n- Database Queries - Search your Notion DBs\n- Content Creation - Generate Notion content\n- Knowledge Base - Use Notion as AI context\n\n## Use Cases\n- Documentation management\n- Knowledge retrieval\n- Content creation\n- Project management",
+      "category": "Integrations",
+      "version": "1.0.0",
+      "url": "https://github.com/anthropics/mcp-server-notion"
+    },
+    {
+      "name": "Linear MCP Server",
+      "description": "Project management integration for Claude. Create issues, manage sprints, and track work directly from your AI assistant.\n\n## Features\n- Issue Creation - Create tickets from conversations\n- Sprint Management - View and update sprints\n- Search - Find issues and projects\n- Status Updates - Track and update progress\n\n## Use Cases\n- Bug reporting from conversations\n- Sprint planning assistance\n- Project status checks\n- Workflow automation",
+      "category": "Integrations",
+      "version": "1.0.0",
+      "url": "https://github.com/anthropics/mcp-server-linear"
+    },
+    {
+      "name": "Sentry MCP Server",
+      "description": "Error tracking integration. Debug issues with AI assistance by connecting Claude to your Sentry data.\n\n## Features\n- Error Analysis - AI-powered debugging\n- Stack Trace Review - Understand errors quickly\n- Issue Search - Find related problems\n- Root Cause Analysis - Identify underlying issues\n\n## Use Cases\n- Bug investigation\n- Error triage\n- Production debugging\n- Incident response",
+      "category": "Developer Tools",
+      "version": "1.0.0",
+      "url": "https://github.com/anthropics/mcp-server-sentry"
+    },
+    {
+      "name": "DeepSeek Coder",
+      "description": "Open-source code generation model from DeepSeek. Strong coding capabilities at lower cost.\n\n## Features\n- Code Generation - Multiple languages\n- Code Completion - Intelligent suggestions\n- Bug Fixing - Error detection and repair\n- Open Source - Self-hostable\n\n## Models\n- DeepSeek-Coder-V2\n- DeepSeek-V3\n\n## Note\nChinese AI - raised concerns about training data sources. Use with appropriate caution for sensitive projects.",
+      "category": "Code Analysis",
+      "version": "1.0.0",
+      "url": "https://github.com/deepseek-ai/DeepSeek-Coder"
+    },
+    {
+      "name": "Grok",
+      "description": "xAI's AI assistant built into X/Twitter. Known for edgier, less filtered responses.\n\n## Features\n- Real-time Data - Trained on Twitter/X data\n- Less Filtered - More direct responses\n- Current Events - Up-to-date information\n- Twitter Integration - Native to X platform\n\n## Availability\nX Premium subscribers.\n\n## Note\nElon Musk's AI company. Different personality than Claude or ChatGPT.",
+      "category": "AI Agents",
+      "version": "1.0.0",
+      "url": "https://x.ai/"
+    },
+    {
+      "name": "LangChain",
+      "description": "Framework for developing applications powered by language models. Build chains, agents, and RAG systems.\n\n## Features\n- Chain Building - Compose LLM workflows\n- Agent Framework - Build autonomous agents\n- RAG Support - Retrieval augmented generation\n- Multi-Model - Works with Claude, GPT, Gemini, etc.\n\n## Languages\n- Python (LangChain)\n- JavaScript (LangChain.js)\n\n## Use Cases\n- Custom AI applications\n- RAG pipelines\n- Multi-step workflows\n- Agent development",
+      "category": "Developer Tools",
+      "version": "1.0.0",
+      "url": "https://github.com/langchain-ai/langchain"
+    },
+    {
+      "name": "CrewAI",
+      "description": "Framework for orchestrating collaborative, role-playing autonomous AI agents.\n\n## Features\n- Role-Based Agents - Define agent personas\n- Collaboration - Agents work together\n- Task Delegation - Automatic work distribution\n- Multi-Model - Works with various LLMs\n\n## Use Cases\n- Research teams\n- Content creation pipelines\n- Complex analysis\n- Simulated workflows",
+      "category": "AI Agents",
+      "version": "1.0.0",
+      "url": "https://github.com/joaomdmoura/crewAI"
+    },
+    {
+      "name": "Composio",
+      "description": "Platform connecting AI agents to 200+ tools and services. Handles authentication and API complexity.\n\n## Features\n- 200+ Integrations - Pre-built connections\n- Auth Handling - OAuth, API keys managed\n- Agent Ready - Works with major frameworks\n- Enterprise Security - SOC2 compliant\n\n## Supported Frameworks\n- LangChain\n- CrewAI\n- Claude\n- OpenAI\n\n## Use Cases\n- Agent tool connections\n- Workflow automation\n- SaaS integrations",
+      "category": "Integrations",
+      "version": "1.0.0",
+      "url": "https://composio.dev/"
+    }
+  ]
+}

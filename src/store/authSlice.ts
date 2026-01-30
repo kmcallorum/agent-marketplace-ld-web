@@ -23,8 +23,10 @@ export const loginWithGithub = createAsyncThunk(
       const response = await authService.login(code);
       authService.saveTokens(response.access_token, response.refresh_token);
       return response.user;
-    } catch {
-      return rejectWithValue('Login failed');
+    } catch (error) {
+      console.error('Login error:', error);
+      const message = error instanceof Error ? error.message : 'Login failed';
+      return rejectWithValue(message);
     }
   }
 );
