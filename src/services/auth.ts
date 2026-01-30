@@ -4,10 +4,30 @@ import { AUTH_TOKEN_KEY, REFRESH_TOKEN_KEY } from '@/utils/constants';
 
 export const authService = {
   login: async (githubCode: string): Promise<AuthResponse> => {
-    const response = await api.post<AuthResponse>('/api/v1/auth/github', {
-      code: githubCode,
-    });
-    return response.data;
+    console.log('[AuthService] Calling POST /api/v1/auth/github with code:', githubCode.substring(0, 8) + '...');
+    console.log('[AuthService] API_BASE_URL:', api.defaults.baseURL);
+    try {
+      const response = await api.post<AuthResponse>('/api/v1/auth/github', {
+        code: githubCode,
+      });
+      console.log('[AuthService] Response status:', response.status);
+      console.log('[AuthService] Response data:', response.data);
+      return response.data;
+    } catch (err: unknown) {
+      if (err && typeof err === 'object' && 'response' in err) {
+        const axiosErr = err as { response?: { status?: number; data?: unknown }; message?: string };
+        console.error('[AuthService] API error response:', {
+          status: axiosErr.response?.status,
+          data: axiosErr.response?.data,
+          message: axiosErr.message,
+        });
+      } else if (err && typeof err === 'object' && 'request' in err) {
+        console.error('[AuthService] No response received - network error');
+      } else {
+        console.error('[AuthService] Error setting up request:', err);
+      }
+      throw err;
+    }
   },
 
   refreshToken: async (refreshToken: string): Promise<{ access_token: string }> => {

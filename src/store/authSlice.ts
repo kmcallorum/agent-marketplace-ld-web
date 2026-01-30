@@ -20,11 +20,24 @@ export const loginWithGithub = createAsyncThunk(
   'auth/loginWithGithub',
   async (code: string, { rejectWithValue }) => {
     try {
+      console.log('[Auth] Starting login with code:', code.substring(0, 8) + '...');
       const response = await authService.login(code);
+      console.log('[Auth] Login response received:', {
+        hasAccessToken: !!response.access_token,
+        hasRefreshToken: !!response.refresh_token,
+        hasUser: !!response.user,
+        user: response.user,
+      });
       authService.saveTokens(response.access_token, response.refresh_token);
+      console.log('[Auth] Tokens saved, returning user');
       return response.user;
     } catch (error) {
-      console.error('Login error:', error);
+      console.error('[Auth] Login error details:', {
+        error,
+        name: error instanceof Error ? error.name : 'unknown',
+        message: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+      });
       const message = error instanceof Error ? error.message : 'Login failed';
       return rejectWithValue(message);
     }

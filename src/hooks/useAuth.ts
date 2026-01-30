@@ -32,11 +32,15 @@ export function useAuth() {
 
   const login = useCallback(
     async (githubCode: string) => {
+      console.log('[useAuth] login called with code:', githubCode.substring(0, 8) + '...');
       try {
-        await dispatch(loginWithGithub(githubCode)).unwrap();
+        const result = await dispatch(loginWithGithub(githubCode)).unwrap();
+        console.log('[useAuth] login succeeded:', result);
         toast.success('Logged in successfully!');
-      } catch {
-        toast.error('Login failed. Please try again.');
+      } catch (err) {
+        console.error('[useAuth] login failed:', err);
+        const errorMsg = err instanceof Error ? err.message : String(err);
+        toast.error(`Login failed: ${errorMsg}`);
       }
     },
     [dispatch]
