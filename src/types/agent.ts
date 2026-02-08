@@ -11,6 +11,7 @@ export interface Agent {
   category: string;
   is_public: boolean;
   is_validated: boolean;
+  storage_key?: string;
   versions?: AgentVersion[];
   created_at: string;
   updated_at: string;

@@ -29,6 +29,7 @@ export interface AdminAgentUpdate {
   category?: string;
   is_public?: boolean;
   is_validated?: boolean;
+  storage_key?: string;
 }
 
 export interface BulkCategoryUpdate {

@@ -71,6 +71,7 @@ export default function Admin() {
     category: '',
     is_public: true,
     is_validated: false,
+    storage_key: '',
   });
 
   // Form state for editing user
@@ -222,6 +223,7 @@ export default function Admin() {
       category: agent.category,
       is_public: agent.is_public,
       is_validated: agent.is_validated,
+      storage_key: agent.storage_key || '',
     });
     setIsAgentModalOpen(true);
   };
@@ -920,6 +922,12 @@ export default function Admin() {
                 ))}
               </select>
             </div>
+            <Input
+              label="Download URL"
+              placeholder="https://github.com/user/repo/releases/download/v1.0/agent.zip"
+              value={editAgentForm.storage_key || ''}
+              onChange={(e) => setEditAgentForm({ ...editAgentForm, storage_key: e.target.value })}
+            />
             <div className="flex items-center gap-6">
               <label className="flex items-center gap-2">
                 <input
