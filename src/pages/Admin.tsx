@@ -7,6 +7,14 @@ import { Pencil, Trash2, Plus, FolderInput, Check, Ban, UserCheck, Users, Search
 import toast from 'react-hot-toast';
 import type { Agent } from '@/types';
 
+function extractErrorMessage(error: any, fallback: string): string {
+  const detail = error?.response?.data?.detail;
+  if (!detail) return fallback;
+  if (typeof detail === 'string') return detail;
+  if (Array.isArray(detail)) return detail.map((d: any) => d.msg || String(d)).join(', ');
+  return fallback;
+}
+
 type AdminTab = 'categories' | 'agents' | 'users';
 
 export default function Admin() {
@@ -143,8 +151,7 @@ export default function Admin() {
       setNewCategory({ name: '', slug: '', icon: '', description: '' });
       toast.success('Category created');
     } catch (error: any) {
-      const detail = error?.response?.data?.detail || 'Failed to create category';
-      toast.error(detail);
+      toast.error(extractErrorMessage(error, 'Failed to create category'));
     } finally {
       setIsSaving(false);
     }
@@ -172,8 +179,7 @@ export default function Admin() {
       setEditingCategory(null);
       toast.success('Category updated');
     } catch (error: any) {
-      const detail = error?.response?.data?.detail || 'Failed to update category';
-      toast.error(detail);
+      toast.error(extractErrorMessage(error, 'Failed to update category'));
     } finally {
       setIsSaving(false);
     }
@@ -194,8 +200,7 @@ export default function Admin() {
       setCategories(categories.filter((c) => c.id !== category.id));
       toast.success('Category deleted');
     } catch (error: any) {
-      const detail = error?.response?.data?.detail || 'Failed to delete category';
-      toast.error(detail);
+      toast.error(extractErrorMessage(error, 'Failed to delete category'));
     }
   };
 
@@ -235,8 +240,7 @@ export default function Admin() {
       // Refresh categories to update agent counts
       loadCategories();
     } catch (error: any) {
-      const detail = error?.response?.data?.detail || 'Failed to update agent';
-      toast.error(detail);
+      toast.error(extractErrorMessage(error, 'Failed to update agent'));
     } finally {
       setIsSaving(false);
     }
@@ -253,8 +257,7 @@ export default function Admin() {
       toast.success('Agent deleted');
       loadCategories(); // Refresh counts
     } catch (error: any) {
-      const detail = error?.response?.data?.detail || 'Failed to delete agent';
-      toast.error(detail);
+      toast.error(extractErrorMessage(error, 'Failed to delete agent'));
     }
   };
 
@@ -295,8 +298,7 @@ export default function Admin() {
       loadAgents(categoryFilter);
       loadCategories();
     } catch (error: any) {
-      const detail = error?.response?.data?.detail || 'Failed to move agents';
-      toast.error(detail);
+      toast.error(extractErrorMessage(error, 'Failed to move agents'));
     } finally {
       setIsSaving(false);
     }
@@ -325,8 +327,7 @@ export default function Admin() {
       setEditingUser(null);
       toast.success('User updated');
     } catch (error: any) {
-      const detail = error?.response?.data?.detail || 'Failed to update user';
-      toast.error(detail);
+      toast.error(extractErrorMessage(error, 'Failed to update user'));
     } finally {
       setIsSaving(false);
     }
@@ -353,8 +354,7 @@ export default function Admin() {
       setBlockReason('');
       toast.success('User blocked');
     } catch (error: any) {
-      const detail = error?.response?.data?.detail || 'Failed to block user';
-      toast.error(detail);
+      toast.error(extractErrorMessage(error, 'Failed to block user'));
     } finally {
       setIsSaving(false);
     }
@@ -368,8 +368,7 @@ export default function Admin() {
       setUsers(users.map((usr) => (usr.id === updated.id ? updated : usr)));
       toast.success('User unblocked');
     } catch (error: any) {
-      const detail = error?.response?.data?.detail || 'Failed to unblock user';
-      toast.error(detail);
+      toast.error(extractErrorMessage(error, 'Failed to unblock user'));
     }
   };
 
@@ -383,8 +382,7 @@ export default function Admin() {
       setUsers(users.filter((usr) => usr.id !== u.id));
       toast.success('User deleted');
     } catch (error: any) {
-      const detail = error?.response?.data?.detail || 'Failed to delete user';
-      toast.error(detail);
+      toast.error(extractErrorMessage(error, 'Failed to delete user'));
     }
   };
 
